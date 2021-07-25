@@ -379,7 +379,7 @@ def OTPassword():
 @app.route('/customerlogout')
 def CustomerLogout():
     session.pop('email', None)
-    session.pop('cuserid', None)
+    session.pop('userid', None)
     return render_template('loginask.html')
  
  
