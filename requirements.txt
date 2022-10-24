@@ -1,3 +1,5 @@
 mysqlclient
 requests
 mysql-connector-python
+twilio
+decouple
