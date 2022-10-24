@@ -1,9 +1,16 @@
 from random import random
+import os
+from twilio.rest import Client
 import math
 import mysql
 import requests
 from flask import Flask, render_template, request, session, redirect, url_for
 from mysql.connector import connect
+from decouple import config
+
+API_SID = config('SID')
+API_TOKEN = config('TOKEN')
+API_USER = config('USER')
  
 app = Flask(__name__)
 app.secret_key = 'Apnokrishi'
@@ -21,9 +28,9 @@ def home():
 def homeFarmer():
     if 'userphonenumber' in session:
         num = session['userphonenumber']
-        connection = mysql.connector.connect(user="krishi123@krishifarm", password="krishi@123",
-                                             host="krishifarm.mysql.database.azure.com", port=3306,
-                                             database="krishi")
+        connection = mysql.connector.connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                                             host="kissanfarm.mysql.database.azure.com", port=3306,
+                                             database="kissan")
         query = "select * from UserDetailsSignup where userphonenumber = '{}'".format(session['userphonenumber'])
         cur = connection.cursor()
         cur.execute(query)
@@ -36,9 +43,9 @@ def homeFarmer():
 def homeCustomer():
     if 'email' in session:
         emailid = session['email']
-        connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                             host="krishifarm.mysql.database.azure.com", port=3306,
-                             database="krishi")
+        connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                             host="kissanfarm.mysql.database.azure.com", port=3306,
+                             database="kissan")
         query = "select * from CustomerDetailsSignup where useremail = '{}'".format(emailid)
         cur = connection.cursor()
         cur.execute(query)
@@ -89,9 +96,9 @@ def CustomerLogin():
 @app.route("/uphaar")
 def Uphaar():
     if 'userphonenumber' in session:
-        connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                             host="krishifarm.mysql.database.azure.com", port=3306,
-                             database="krishi")
+        connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                             host="kissanfarm.mysql.database.azure.com", port=3306,
+                             database="kissan")
         query = "select * from UserDetailsSignup where userphonenumber = '{}'".format(session['userphonenumber'])
         cur = connection.cursor()
         cur.execute(query)
@@ -103,9 +110,9 @@ def Uphaar():
 @app.route('/Farmersell')
 def FarmerSell():
     if 'userphonenumber' in session:
-        connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                             host="krishifarm.mysql.database.azure.com", port=3306,
-                             database="krishi")
+        connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                             host="kissanfarm.mysql.database.azure.com", port=3306,
+                             database="kissan")
         query = "select * from UserDetailsSignup where userphonenumber = '{}'".format(session['userphonenumber'])
         cur = connection.cursor()
         cur.execute(query)
@@ -117,9 +124,9 @@ def FarmerSell():
 @app.route('/Customerprofile')
 def CustomerProfile():
     if 'email' in session:
-        connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                             host="krishifarm.mysql.database.azure.com", port=3306,
-                             database="krishi")
+        connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                             host="kissanfarm.mysql.database.azure.com", port=3306,
+                             database="kissan")
         query = "select * from CustomerDetailsSignup where useremail = '{}'".format(session['email'])
         cur = connection.cursor()
         cur.execute(query)
@@ -134,9 +141,9 @@ def CustomerProfile():
 @app.route('/Farmerprofile')
 def FarmerProfile():
     if 'userphonenumber' in session:
-        connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                             host="krishifarm.mysql.database.azure.com", port=3306,
-                             database="krishi")
+        connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                             host="kissanfarm.mysql.database.azure.com", port=3306,
+                             database="kissan")
         query = "select * from UserDetailsSignup where userphonenumber = '{}'".format(session['userphonenumber'])
         cur = connection.cursor()
         cur.execute(query)
@@ -166,9 +173,9 @@ def Order():
 @app.route('/farmerBuy')
 def FarmerBuy():
     if 'userphonenumber' in session:
-        connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                             host="krishifarm.mysql.database.azure.com", port=3306,
-                             database="krishi")
+        connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                             host="kissanfarm.mysql.database.azure.com", port=3306,
+                             database="kissan")
         query = "select * from UserDetailsSignup where userphonenumber = '{}'".format(session['userphonenumber'])
         cur = connection.cursor()
         cur.execute(query)
@@ -182,9 +189,9 @@ def FarmerBuy():
 @app.route('/customerBuy')
 def CustomerBuy():
     if 'email' in session:
-        connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                             host="krishifarm.mysql.database.azure.com", port=3306,
-                             database="krishi")
+        connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                             host="kissanfarm.mysql.database.azure.com", port=3306,
+                             database="kissan")
         query = "select * from CustomerDetailsSignup where useremail = '{}'".format(session['email'])
         cur = connection.cursor()
         cur.execute(query)
@@ -197,18 +204,18 @@ def CustomerBuy():
 @app.route('/Checkout')
 def CheckOut():
     if 'userphonenumber' in session:
-        connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                         host="krishifarm.mysql.database.azure.com", port=3306,
-                         database="krishi")
+        connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                         host="kissanfarm.mysql.database.azure.com", port=3306,
+                         database="kissan")
         query = "select * from UserDetailsSignup where userphonenumber = '{}'".format(session['userphonenumber'])
         cur = connection.cursor()
         cur.execute(query)
         data = cur.fetchone()
         return render_template("checkout.html", nm=data[1])
     elif 'email' in session: 
-        connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                            host="krishifarm.mysql.database.azure.com", port=3306,
-                            database="krishi")
+        connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                            host="kissanfarm.mysql.database.azure.com", port=3306,
+                            database="kissan")
         query = "select * from CustomerDetailsSignup where useremail = '{}'".format(session['email'])
         cur = connection.cursor()
         cur.execute(query)
@@ -221,10 +228,10 @@ def CheckOut():
 def checkotp():
     otp = request.args.get("otp")
     if otp == otpf:
-        connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                             host="krishifarm.mysql.database.azure.com", port=3306,
-                             database="krishi")
-        query = "insert into UserDetailsSignup (username,useremail,password,userphonenumber) values('{}','{}','{}','{}')".format(
+        connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                             host="kissanfarm.mysql.database.azure.com", port=3306,
+                             database="kissan")
+        query = "insert into UserDetailsSignup (name,email,password,userphonenumber) values('{}','{}','{}','{}')".format(
             nm,
             em, pas, pnum)
         cur = connection.cursor()
@@ -240,9 +247,9 @@ def checkotp():
 def customercheckotp():
     otp = request.args.get("otp")
     if otp == otpc:
-        connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                             host="krishifarm.mysql.database.azure.com", port=3306,
-                             database="krishi")
+        connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                             host="kissanfarm.mysql.database.azure.com", port=3306,
+                             database="kissan")
         query = "insert into CustomerDetailsSignup (username,useremail,userpassword,userphonenumber) values('{}','{}','{}','{}')".format(
             namec, emailc, passwc, pnumberc)
         cur = connection.cursor()
@@ -260,8 +267,8 @@ def checklogin():
         return redirect('/homefarmer')
     pnumbers = request.args.get('user_phone')
     passw = request.args.get('password')
-    connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                         host="krishifarm.mysql.database.azure.com", port=3306, database="krishi"
+    connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                         host="kissanfarm.mysql.database.azure.com", port=3306, database="kissan"
                          )
     query1 = "select * from UserDetailsSignup where userphonenumber = '{}'".format(pnumbers)
     cur = connection.cursor()
@@ -290,9 +297,9 @@ def checksignup():
     pnum = request.args.get('number')
     if pas != cpas:
         return render_template("signup.html", error="  Passord and confirm password doesn't match !!")
-    connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                         host="krishifarm.mysql.database.azure.com", port=3306,
-                         database="krishi")
+    connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                         host="kissanfarm.mysql.database.azure.com", port=3306,
+                         database="kissan")
     query1 = "select * from UserDetailsSignup where userphonenumber = '{}'".format(pnum)
     cur1 = connection.cursor()
     cur1.execute(query1)
@@ -302,15 +309,23 @@ def checksignup():
     if (data != None):
         return render_template("signup.html", error="Account already exists ! Login 👇")
     otpf = OTPassword()
-    url = "https://www.fast2sms.com/dev/bulk"
-    querystring = {"authorization": "2PZiMfQSWdGU3pDAstr95HcJzljenv8T60RgqumaBFbXyCKN4hPZgAWXiMsqJBoladpur9CjED5LU8SQ",
-                   "sender_id": "FSTSMS", "language": "english", "route": "qt",
-                   "numbers": pnum, "message": "43212",
-                   "variables": "{BB}", "variables_values": otpf}
-    headers = {
-        'cache-control': "no-cache"
-    }
-    response = requests.request("GET", url, headers=headers, params=querystring)
+    # url = "https://www.fast2sms.com/dev/bulk"
+    # querystring = {"authorization": "2PZiMfQSWdGU3pDAstr95HcJzljenv8T60RgqumaBFbXyCKN4hPZgAWXiMsqJBoladpur9CjED5LU8SQ",
+    #                "sender_id": "FSTSMS", "language": "english", "route": "qt",
+    #                "numbers": pnum, "message": "43212",
+    #                "variables": "{BB}", "variables_values": otpf}
+    # headers = {
+    #     'cache-control': "no-cache"
+    # }
+    client = Client(API_SID, API_TOKEN)
+
+    message = client.messages.create(
+    body='Your One Time Password is {}'.format(otpf),
+    from_='+14632582198',
+    to='+91'+pnum
+    )
+    print(message.sid)
+    # response = requests.request("GET", url, headers=headers, params=querystring)
     return render_template('CheckOpt.html')
  
  
@@ -324,8 +339,8 @@ def Checksignupcustomer():
     pnumberc = request.args.get('number')
     if passwc != cpasswc:
         return render_template("customersignup.html", error="  Passord and confirm password doesn't match !!")
-    connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                         host="krishifarm.mysql.database.azure.com", port=3306, database="krishi")
+    connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                         host="kissanfarm.mysql.database.azure.com", port=3306, database="kissan")
     query1 = "select * from CustomerDetailsSignup where userphonenumber = '{}'".format(pnumberc)
     cur1 = connection.cursor()
     cur1.execute(query1)
@@ -333,15 +348,23 @@ def Checksignupcustomer():
     if data != None:
         return render_template("customersignup.html", error="Account already exists! Login 👇")
     otpc = OTPassword()
-    url = "https://www.fast2sms.com/dev/bulk"
-    querystring = {"authorization": "2PZiMfQSWdGU3pDAstr95HcJzljenv8T60RgqumaBFbXyCKN4hPZgAWXiMsqJBoladpur9CjED5LU8SQ",
-                   "sender_id": "FSTSMS", "language": "english", "route": "qt",
-                   "numbers": pnumberc, "message": "43212",
-                   "variables": "{BB}", "variables_values": otpc}
-    headers = {
-        'cache-control': "no-cache"
-    }
-    response = requests.request("GET", url, headers=headers, params=querystring)
+    # url = "https://www.fast2sms.com/dev/bulk"
+    # querystring = {"authorization": "2PZiMfQSWdGU3pDAstr95HcJzljenv8T60RgqumaBFbXyCKN4hPZgAWXiMsqJBoladpur9CjED5LU8SQ",
+    #                "sender_id": "FSTSMS", "language": "english", "route": "qt",
+    #                "numbers": pnumberc, "message": "43212",
+    #                "variables": "{BB}", "variables_values": otpc}
+    # headers = {
+    #     'cache-control': "no-cache"
+    # }
+    # response = requests.request("GET", url, headers=headers, params=querystring)
+    client = Client(API_SID, API_TOKEN)
+
+    message = client.messages.create(
+    body='Your One Time Password is {}'.format(otpc),
+    from_='+14632582198',
+    to='+91'+ pnumberc
+    )
+    print(message.sid)
     return render_template('/CustomerCheckOpt.html')
  
  
@@ -351,8 +374,8 @@ def checklogincustomer():
         return redirect('/homecustomer')
     email = request.args.get('user_email')
     passw = request.args.get('password')
-    connection = connect(user="krishi123@krishifarm", password="krishi@123",
-                         host="krishifarm.mysql.database.azure.com", port=3306, database="krishi")
+    connection = connect(user="KissanAdmin@kissanfarm", password="Kissan123",
+                         host="kissanfarm.mysql.database.azure.com", port=3306, database="kissan")
     query1 = "select * from CustomerDetailsSignup where useremail = '{}'".format(email)
     cur = connection.cursor()
     cur.execute(query1)
